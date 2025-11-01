@@ -13,7 +13,8 @@ from metrics import (
     cart_addition_total, 
     errors_total,
     active_sessions_gauge,
-    cpu_usage_gauge
+    cpu_usage_gauge,
+    request_duration_histogram
     )
 
 app = Flask(__name__,
@@ -282,7 +283,18 @@ def remove_item(item_id):
 
 @app.route('/')
 def index():
+    import time
+
+    start_time = time.time()
+    
     products = Product.query.all()
+
+    import random
+    time.sleep(random.uniform(0.0, 2))
+    
+    duration = time.time() - start_time
+    request_duration_histogram.labels(method='GET', endpoint='/', status_code=200).observe(duration)
+
     return render_template('index.html', products=products)
 
 if __name__ == '__main__':
