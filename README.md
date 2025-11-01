@@ -11,6 +11,14 @@ Laboratório de implementação de observabilidade em uma aplicação de e-comme
 
 ```bash
 # Construindo e subindo os containers
-
 docker-compose up --build -d
+
+
+# Acessando a aplicação Fakeshop
+localhost:5000
+
+
+# Acessando as métricas
+localhost:5000/metrics
+
 ```
